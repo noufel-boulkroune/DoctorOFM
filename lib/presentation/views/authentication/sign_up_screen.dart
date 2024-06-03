@@ -31,32 +31,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String _email = '';
   String _fullName = '';
-  String _address = '';
-  UserType _userType = UserType.patient;
+  String _areaOfExpertise = '';
+  // UserType _userType = UserType.patient;
   Gender _selectedGender = Gender.Male;
   DateTime? _dateOfBirth;
+  String _password = '';
   File? _image;
 
   bool _isLoading = false;
-
   void _submit() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _dateOfBirth != null) {
       _formKey.currentState!.save();
       setState(() {
         _isLoading = true;
       });
 
       final newUser = UserModel(
-        areaOfExpertise: '',
-        id: getRandomId(),
-        password: "1234",
-        name: _fullName,
-        email: _email,
-        gender: _selectedGender.name,
-        dateOfBirth: _dateOfBirth!,
-        type: _userType.name,
-        address: _address,
-      );
+          areaOfExpertise: _areaOfExpertise,
+          id: getRandomId(),
+          password: _password,
+          name: _fullName,
+          email: _email,
+          gender: _selectedGender.name,
+          dateOfBirth: _dateOfBirth!,
+          type: UserType.doctor.name,
+          address: '',
+          review: "0");
 
       _userProvider.createUser(newUser).then((_) {
         setState(() {
@@ -70,6 +70,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         _showErrorDialog('Error creating user: $error');
       });
+    } else if (_dateOfBirth == null) {
+      _showErrorDialog('Please select a date of birth.');
     }
   }
 
@@ -85,11 +87,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred'),
+        title: const Text('An Error Occurred'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('Okay'),
+            child: const Text('Okay'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -101,9 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _onCameraClick() {
     final action = CupertinoActionSheet(
-      message: Text(
+      message: const Text(
         'Profile Picture',
-        style: const TextStyle(fontSize: 15.0),
+        style: TextStyle(fontSize: 15.0),
       ),
       actions: <Widget>[
         CupertinoActionSheetAction(
@@ -118,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               });
             }
           },
-          child: Text('Choose from Gallery'),
+          child: const Text('Choose from Gallery'),
         ),
         CupertinoActionSheetAction(
           isDestructiveAction: false,
@@ -132,11 +134,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               });
             }
           },
-          child: Text('Take Picture'),
+          child: const Text('Take Picture'),
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: () {
           Navigator.pop(context);
         },
@@ -152,12 +154,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.themeWhiteColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Profile Details',
           style: TextStyle(color: Colors.black),
         ),
@@ -210,7 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                         padding: EdgeInsets.only(left: 10.w, right: 10.w),
                         child: const Text('Full Name')),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 5.h),
                     ThemeTextField(
                       labelText: 'Full Name',
                       validation: (value) {
@@ -227,7 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                         padding: EdgeInsets.only(left: 10.w, right: 10.w),
                         child: const Text('Email')),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 5.h),
                     ThemeTextField(
                       labelText: 'Email',
                       keyboardType: TextInputType.emailAddress,
@@ -237,23 +239,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     ),
                     SizedBox(height: 15.h),
+
+                    Padding(
+                        padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                        child: const Text('Password')),
+                    SizedBox(height: 5.h),
+                    ThemeTextField(
+                      labelText: 'Password',
+                      hintText: 'Enter your password',
+                      isObscure: true,
+                      validation: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+
+                        String pattern = r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$';
+                        RegExp regex = RegExp(pattern);
+                        if (!regex.hasMatch(value)) {
+                          return 'Password must be more than 8 characters and contain at least one uppercase char and a number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _password = value!;
+                      },
+                    ),
+                    SizedBox(height: 15.h),
+
                     Padding(
                         padding: EdgeInsets.only(left: 10.w, right: 10.w),
                         child: const Text('Date of Birth')),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 5.h),
                     ThemeTextField(
                       labelText: 'Date of Birth',
                       hintText: _formattedDateOfBirth(),
-                      icon: Icons.calendar_today,
                       isObscure: false,
                       enable: true,
                       onTap: () {
                         showDatePicker(
                           context: context,
-                          initialDate:
-                              DateTime.now().subtract(Duration(days: 20 * 365)),
+                          initialDate: DateTime.now()
+                              .subtract(const Duration(days: 20 * 365)),
                           firstDate: DateTime.now()
-                              .subtract(Duration(days: 120 * 365)),
+                              .subtract(const Duration(days: 120 * 365)),
                           lastDate: DateTime.now(),
                         ).then((pickedDate) {
                           if (pickedDate != null) {
@@ -267,28 +295,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(height: 15.h),
                     Padding(
                         padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                        child: const Text('Address')),
-                    SizedBox(height: 10.h),
+                        child: const Text('Area of Expertise')),
+                    SizedBox(height: 5.h),
                     ThemeTextField(
-                      labelText: 'Address',
-                      hintText: 'Enter Address',
-                      icon: Icons.location_on,
+                      labelText: 'Area of Expertise',
+                      hintText: 'Enter your area of expertise',
                       isObscure: false,
                       validation: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your address';
+                          return 'Please enter your area of expertise';
                         }
                         return null;
                       },
                       onSaved: (value) {
-                        _address = value!;
+                        _areaOfExpertise = value!;
                       },
                     ),
                     SizedBox(height: 15.h),
                     Padding(
                         padding: EdgeInsets.only(left: 10.w, right: 10.w),
                         child: const Text('Gender')),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 5.h),
                     DropdownButtonFormField(
                       value: _selectedGender != null ? _selectedGender : null,
                       decoration: inputDecoration.copyWith(
@@ -307,29 +334,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                     ),
-                    SizedBox(height: 15.h),
-                    Padding(
-                        padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                        child: const Text('User Type')),
-                    SizedBox(height: 10.h),
-                    DropdownButtonFormField<UserType>(
-                      value: _userType,
-                      decoration: inputDecoration.copyWith(
-                        hintText: 'Select Type',
-                        labelText: 'Type',
-                      ),
-                      items: UserType.values
-                          .map((type) => DropdownMenuItem(
-                                child: Text(type.name),
-                                value: type,
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _userType = value!;
-                        });
-                      },
-                    ),
+                    SizedBox(height: 20.h),
+                    // Padding(
+                    //     padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                    //     child: const Text('User Type')),
+                    // SizedBox(height: 5.h),
+                    // DropdownButtonFormField<UserType>(
+                    //   value: _userType,
+                    //   decoration: inputDecoration.copyWith(
+                    //     hintText: 'Select Type',
+                    //     labelText: 'Type',
+                    //   ),
+                    //   items: UserType.values
+                    //       .map((type) => DropdownMenuItem(
+                    //             child: Text(type.name),
+                    //             value: type,
+                    //           ))
+                    //       .toList(),
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       _userType = value!;
+                    //     });
+                    //   },
+                    // ),
+                    // SizedBox(height: 20.h),
+
                     SizedBox(height: 20.h),
                     ThemeButton(
                       onPressed: _submit,

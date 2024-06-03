@@ -13,6 +13,10 @@ TextStyle textStyleTitle() {
   return TextStyle(fontSize: 19.w, fontWeight: FontWeight.w500);
 }
 
+TextStyle textStyleHomeTitle() {
+  return TextStyle(fontSize: 17.w, fontWeight: FontWeight.w500);
+}
+
 InputDecoration inputDecoration = InputDecoration(
   filled: true,
   fillColor: AppColors.themeWhiteColor,

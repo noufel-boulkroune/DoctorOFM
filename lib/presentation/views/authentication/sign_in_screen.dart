@@ -34,21 +34,25 @@ class _SignInScreenState extends State<SignInScreen> {
         _isLoading = true;
       });
 
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState!.save();
-        try {
-          await userProvider.loginUser(_email, _password);
-          setState(() {
-            _isLoading = false;
-          });
-          Navigator.pushReplacementNamed(context, TabScreen.routeName);
-        } catch (error) {
-          print('Sign-in failed: $error');
-          setState(() {
-            _isLoading = false;
-          });
-          showLoginErrorDialog(context);
-        }
+      try {
+        await userProvider.loginUser(_email, _password);
+        print('Sig _email: $_email');
+        print('Sig _email: $_password');
+
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          TabScreen.routeName,
+          (route) => false,
+        );
+      } catch (error) {
+        print('Sign-in failed: $error');
+        setState(() {
+          _isLoading = false;
+        });
+        showLoginErrorDialog(context);
       }
     }
   }
@@ -265,7 +269,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          //SizedBox(height: 20.h),
                         ],
                       ),
                     ),

@@ -7,6 +7,7 @@ class UserModel {
   final String address;
   final String gender;
   final String areaOfExpertise;
+  final String review;
   final String id;
 
   UserModel({
@@ -18,6 +19,7 @@ class UserModel {
     required this.address,
     required this.gender,
     required this.areaOfExpertise,
+    required this.review,
     required this.id,
   });
 
@@ -30,6 +32,7 @@ class UserModel {
       dateOfBirth: DateTime.parse(json['date_of_birth']),
       address: json['address'] ?? '',
       gender: json['gender'] ?? '',
+      review: json['review'] ?? '',
       areaOfExpertise: json['area_of_expertise'] ?? '',
       id: json['id'] ?? '',
     );
@@ -44,6 +47,7 @@ class UserModel {
       'date_of_birth': dateOfBirth.toIso8601String(),
       'address': address,
       'gender': gender,
+      'review': review,
       'area_of_expertise': areaOfExpertise,
       'id': id,
     };

@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 class ThemeButton extends StatefulWidget {
   final Function onPressed;
+  final double? weidth;
   final String label;
-  final Color bgColor;
-  final Color textColor;
+  final Color? bgColor;
+  final Color? textColor;
   final double? buttonHeight;
   final Color? borderColor;
   final double? borderWidth;
@@ -15,8 +16,9 @@ class ThemeButton extends StatefulWidget {
     Key? key,
     required this.onPressed,
     required this.label,
-    this.bgColor = AppColors.themeColor,
-    this.textColor = AppColors.tagBGColor,
+    this.weidth,
+    this.bgColor,
+    this.textColor,
     this.buttonHeight,
     this.borderColor,
     this.borderWidth,
@@ -30,7 +32,7 @@ class _ThemeButtonState extends State<ThemeButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: widget.weidth ?? double.infinity,
       height: widget.buttonHeight ?? 40.h,
       child: ElevatedButton(
         onPressed: () {
@@ -38,7 +40,8 @@ class _ThemeButtonState extends State<ThemeButton> {
         },
         style: ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          backgroundColor: MaterialStateProperty.all(widget.bgColor),
+          backgroundColor:
+              MaterialStateProperty.all(widget.bgColor ?? AppColors.themeColor),
           shadowColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(10),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -57,7 +60,8 @@ class _ThemeButtonState extends State<ThemeButton> {
           padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
           child: Text(
             widget.label,
-            style: TextStyle(color: widget.textColor, fontSize: 14),
+            style: TextStyle(
+                color: widget.textColor ?? AppColors.tagBGColor, fontSize: 14),
           ),
         ),
       ),

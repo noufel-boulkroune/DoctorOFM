@@ -10,7 +10,7 @@ class ThemeTextField extends StatefulWidget {
   final String? hintText;
   final String? labelText;
   final Function(String?)? validation;
-  final IconData? icon;
+
   bool? isObscure;
   TextInputType? keyboardType;
   TextEditingController? inputController;
@@ -31,7 +31,6 @@ class ThemeTextField extends StatefulWidget {
       this.validation,
       this.hintText = "",
       this.labelText,
-      this.icon,
       this.inputController,
       this.keyboardType,
       this.isSearchField = false,
@@ -48,75 +47,80 @@ class ThemeTextField extends StatefulWidget {
 }
 
 class _ThemeTextFieldState extends State<ThemeTextField> {
+  String? _errorText;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 35.h,
-          child: TextFormField(
-            controller: widget.inputController,
-            textAlignVertical: TextAlignVertical.center,
-            readOnly: (widget.isButton ?? false) || !widget.enable!,
-            onTap: () {
-              if (widget.onTap != null) {
-                widget.onTap!();
-              }
-            },
-            maxLines: widget.maxLine ?? 1,
-            minLines: widget.minLine ?? 1,
-            autocorrect: false,
-            obscureText: widget.isObscure!,
-            textInputAction: widget.inputAction ?? TextInputAction.done,
-            keyboardType: widget.keyboardType ?? TextInputType.text,
-            cursorColor: Colors.black,
-            style: TextStyle(
-              color: widget.textColor ?? AppColors.textFieldTextColor,
-            ),
-            inputFormatters: [
-              widget.keyboardType == TextInputType.emailAddress
-                  ? FilteringTextInputFormatter.deny(RegExp(r"\s\b|\b\s"))
-                  : FilteringTextInputFormatter.deny(RegExp(''))
-            ],
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: AppColors.themeWhiteColor,
-              contentPadding: EdgeInsets.all(19.w),
-              errorMaxLines: 1,
-              hintText: widget.hintText,
-              labelText: widget.labelText,
-              labelStyle: TextStyle(
-                color: widget.textColor ?? AppColors.themeLightGrey,
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: AppColors.errorColor,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: AppColors.themeColor,
-                ),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: AppColors.errorColor,
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: AppColors.themeLightGrey,
-                ),
-              ),
-            ),
-            validator: widget.validation as String? Function(String?)?,
-            onSaved: widget.onSaved,
+        TextFormField(
+          controller: widget.inputController,
+          textAlignVertical: TextAlignVertical.center,
+          readOnly: (widget.isButton ?? false) || !(widget.enable ?? true),
+          onTap: () {
+            if (widget.onTap != null) {
+              widget.onTap!();
+            }
+          },
+          maxLines: widget.maxLine ?? 1,
+          minLines: widget.minLine ?? 1,
+          autocorrect: false,
+          obscureText: widget.isObscure ?? false,
+          textInputAction: widget.inputAction ?? TextInputAction.done,
+          keyboardType: widget.keyboardType ?? TextInputType.text,
+          cursorColor: Colors.black,
+          style: TextStyle(
+            color: widget.textColor ?? AppColors.textFieldTextColor,
           ),
+          inputFormatters: [
+            if (widget.keyboardType == TextInputType.emailAddress)
+              FilteringTextInputFormatter.deny(RegExp(r"\s\b|\b\s"))
+          ],
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.themeWhiteColor,
+            contentPadding: EdgeInsets.all(10.w),
+            errorMaxLines: 1,
+            hintText: widget.hintText,
+            labelText: widget.labelText,
+            labelStyle: TextStyle(
+              color: widget.textColor ?? AppColors.themeLightGrey,
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(
+                color: AppColors.errorColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(
+                color: AppColors.themeColor,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(
+                color: AppColors.errorColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(
+                color: AppColors.themeLightGrey,
+              ),
+            ),
+            errorText: _errorText,
+          ),
+          validator: (value) {
+            setState(() {
+              _errorText =
+                  widget.validation != null ? widget.validation!(value) : null;
+            });
+            return _errorText;
+          },
+          onSaved: widget.onSaved,
         ),
       ],
     );

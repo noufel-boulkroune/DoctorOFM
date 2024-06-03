@@ -1,5 +1,8 @@
+import 'package:dr_office_management/data/constants/app_colors.dart';
 import 'package:dr_office_management/presentation/views/dashboard/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabScreen extends StatefulWidget {
   static const String routeName = '/tab';
@@ -18,20 +21,26 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late List<bool> _showText;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 5,
+      length: 4,
       vsync: this,
       initialIndex: widget.selectedIndex ?? 0,
     );
     _tabController.addListener(_handleTabSelection);
+    _showText = List.generate(4, (_) => false);
+    _showText[_tabController.index] = true;
   }
 
   void _handleTabSelection() {
-    setState(() {});
+    setState(() {
+      _showText = List.generate(4, (_) => false);
+      _showText[_tabController.index] = true;
+    });
   }
 
   @override
@@ -43,39 +52,67 @@ class _TabScreenState extends State<TabScreen>
           HomeScreen(),
           Container(color: Colors.blue),
           Container(color: Colors.green),
-          Container(color: Colors.red),
           Container(color: Colors.orange),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_rounded),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          _buildBottomNavigationBarItem(
+              Icons.home, Icons.home_outlined, 'Home', 0),
+          _buildBottomNavigationBarItem(
+              Icons.favorite, Icons.favorite_outline, 'Favorite', 1),
+          _buildBottomNavigationBarItem(
+              Icons.chat, Icons.chat_outlined, 'Chat', 2),
+          _buildBottomNavigationBarItem(
+              Icons.person, Icons.person_outline, 'Profile', 3),
         ],
         currentIndex: _tabController.index,
         onTap: (index) {
           _tabController.animateTo(index);
         },
       ),
+    );
+  }
+
+  BottomNavigationBarItem _buildBottomNavigationBarItem(
+      IconData icon, IconData iconOutlined, String label, int index) {
+    return BottomNavigationBarItem(
+      icon: _showText[index]
+          ? Container(
+              decoration: BoxDecoration(
+                color: AppColors.themeColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icon,
+                      color: AppColors.themeColor,
+                    ),
+                    SizedBox(width: 5.w),
+                    Flexible(
+                      child: Text(
+                        label,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: AppColors.themeColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : Icon(
+              iconOutlined,
+              color: AppColors.themeColor,
+            ),
+      label: '',
     );
   }
 }

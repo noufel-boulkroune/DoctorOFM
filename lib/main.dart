@@ -4,14 +4,20 @@ import 'package:dr_office_management/presentation/views/authentication/sign_in_s
 import 'package:dr_office_management/presentation/views/authentication/sign_up_screen.dart';
 import 'package:dr_office_management/presentation/views/dashboard/home_screen.dart';
 import 'package:dr_office_management/presentation/views/dashboard/tab_screen.dart';
+import 'package:dr_office_management/presentation/views/favorite/favorite_screen.dart';
 import 'package:dr_office_management/presentation/views/onboarding/onboarding_screen_one.dart';
 import 'package:dr_office_management/presentation/views/onboarding/splash_screen.dart';
+import 'package:dr_office_management/presentation/views/speciality_doctors_screen/speciality_doctors_screen.dart';
+import 'package:dr_office_management/presentation/views/top_doctors/top_doctors.screen.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MyApp());
 }
 
@@ -27,6 +33,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             title: 'Doctor Office Management',
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.deepPurple,
               visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -39,7 +46,11 @@ class MyApp extends StatelessWidget {
               SignInScreen.routeName: (context) => SignInScreen(),
               SignUpScreen.routeName: (context) => SignUpScreen(),
               TabScreen.routeName: (context) => const TabScreen(),
-              HomeScreen.routeName: (context) => const HomeScreen(),
+              HomeScreen.routeName: (context) => HomeScreen(),
+              FavoriteScreen.routeName: (context) => const FavoriteScreen(),
+              TopDoctorsScreen.routeName: (context) => const TopDoctorsScreen(),
+              SpecialityDoctorsScreen.routeName: (context) =>
+                  const SpecialityDoctorsScreen(),
             },
           );
         },
