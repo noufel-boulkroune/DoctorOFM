@@ -10,4 +10,15 @@ class AppAssetsPath {
   static const String femaleProfilePicture = '${base}female_profile.png';
   static const String google = '${base}google.png';
   static const String facebook = '${base}facebook.png';
+  static const String alarm = '${base}alarm.png';
+  static const String alarmOrange = '${base}alarm_orange.png';
+  static const String confirmation = '${base}confirmation.png';
+  static const String heart = '${base}heart.png';
+  static const String house = '${base}house.png';
+  static const String consultation = '${base}consultation.png';
+  static const String dental = '${base}dental.png';
+  static const String medicines = '${base}medicines.png';
+  static const String physician = '${base}physician.png';
+  static const String skin = '${base}skin.png';
+  static const String surgeon = '${base}surgeon.png';
 }

@@ -25,7 +25,7 @@ class DoctorFavoriteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.h,
-      width: 140.w,
+      width: 140.h,
       margin: EdgeInsets.symmetric(horizontal: 10.0.h),
       padding: EdgeInsets.all(10.0.h),
       decoration: BoxDecoration(
@@ -38,11 +38,11 @@ class DoctorFavoriteWidget extends StatelessWidget {
             children: [
               SizedBox(height: 15.h),
               CircleAvatar(
-                radius: 50,
+                radius: 50.h,
                 child: ClipOval(
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
+                    width: 100.h,
+                    height: 100.h,
                     child: Image.asset(
                       userModel.gender == 'Male'
                           ? AppAssetsPath.maleProfilePicture
@@ -72,6 +72,9 @@ class DoctorFavoriteWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
                 ),
               ),
               Flexible(
@@ -80,6 +83,9 @@ class DoctorFavoriteWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
                 ),
               ),
             ],
@@ -91,8 +97,8 @@ class DoctorFavoriteWidget extends StatelessWidget {
               height: 25.h,
               width: 25.h,
               decoration: BoxDecoration(
-                color: AppColors.themeMaterialColor.shade100.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(13.0),
+                color: AppColors.themeMaterialColor.shade100.withOpacity(0.5.h),
+                borderRadius: BorderRadius.circular(13.0.h),
               ),
               child: Center(
                 child: GestureDetector(
@@ -104,11 +110,15 @@ class DoctorFavoriteWidget extends StatelessWidget {
                   onTap: () {
                     if (onRemove != null && isFavorite) {
                       showModalBottomSheet(
+                        constraints: const BoxConstraints(
+                          maxWidth: double.infinity,
+                        ),
                         context: context,
                         builder: (BuildContext context) {
                           return Container(
-                            padding: EdgeInsets.all(16.0.w),
+                            padding: EdgeInsets.all(16.w),
                             // color: Colors.white,
+                            width: screenWidth(context),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,

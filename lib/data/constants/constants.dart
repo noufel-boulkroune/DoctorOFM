@@ -1,6 +1,8 @@
+import 'package:dr_office_management/data/constants/assets_path.dart';
 import 'package:dr_office_management/data/models/grid_items_model.dart';
 import 'package:dr_office_management/data/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
@@ -14,19 +16,6 @@ enum Gender {
   Male,
   Femaile,
 }
-
-List<GridItem> items = [
-  GridItem(
-      icon: Icons.local_hospital, text: 'Consultation', color: Colors.blue),
-  GridItem(icon: Icons.local_hospital, text: 'Dental', color: Colors.purple),
-  GridItem(icon: Icons.local_hospital, text: 'Heart', color: Colors.orange),
-  GridItem(icon: Icons.local_hospital, text: 'Hospitals', color: Colors.green),
-  GridItem(icon: Icons.local_hospital, text: 'Medicines', color: Colors.red),
-  GridItem(icon: Icons.local_hospital, text: 'Physician', color: Colors.yellow),
-  GridItem(icon: Icons.local_hospital, text: 'Skin', color: Colors.teal),
-  GridItem(
-      icon: Icons.local_hospital, text: 'Surgeon', color: Colors.deepOrange),
-];
 
 List<UserModel> doctorsList = [
   UserModel(
@@ -89,4 +78,62 @@ List<UserModel> doctorsList = [
     id: '5',
     review: 'Highly skilled surgeon',
   ),
+];
+
+List<GridItem> items = [
+  GridItem(
+      imagePath: 'assets/images/consultation.png',
+      text: 'Consultation',
+      color: Colors.blue),
+  GridItem(
+      imagePath: 'assets/images/dental.png',
+      text: 'Dental',
+      color: Colors.purple),
+  GridItem(
+      imagePath: 'assets/images/heart.png',
+      text: 'Heart',
+      color: Colors.orange),
+  GridItem(
+      imagePath: 'assets/images/house.png',
+      text: 'Hospitals',
+      color: Colors.green),
+  GridItem(
+      imagePath: 'assets/images/medicines.png',
+      text: 'Medicines',
+      color: Colors.red),
+  GridItem(
+      imagePath: 'assets/images/physician.png',
+      text: 'Physician',
+      color: Colors.yellow),
+  GridItem(
+      imagePath: 'assets/images/skin.png', text: 'Skin', color: Colors.teal),
+  GridItem(
+      imagePath: 'assets/images/surgeon.png',
+      text: 'Surgeon',
+      color: Colors.deepOrange),
+];
+
+List<Map<String, String>> notifications = [
+  {
+    'date': 'Today, ${DateFormat('MMMM dd, yyyy').format(DateTime.now())}',
+    'title': 'Appointment Alarm',
+    'description':
+        'Your appointment will start in 15 minutes. Stay with the app and take care.',
+    'image': AppAssetsPath.alarm,
+  },
+  {
+    'date': 'Today, ${DateFormat('MMMM dd, yyyy').format(DateTime.now())}',
+    'title': 'Appointment Confirmed',
+    'description':
+        'Your appointment will start in 15 minutes. Stay with the app and take care.',
+    'image': AppAssetsPath.confirmation,
+  },
+  {
+    'date':
+        'Yesterday, ${DateFormat('MMMM dd, yyyy').format(DateTime.now().subtract(Duration(days: 1)))}',
+    'title': 'Appointment Alarm',
+    'description':
+        'Your appointment will start in 15 minutes. Stay with the app and take care.',
+    'image': AppAssetsPath.alarmOrange,
+  },
 ];

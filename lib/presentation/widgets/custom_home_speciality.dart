@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomHomeSpeciality extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String text;
   final Color color;
   final double iconSize;
 
   const CustomHomeSpeciality({
     Key? key,
-    required this.icon,
+    required this.imagePath,
     required this.text,
     required this.color,
-    this.iconSize = 24.0,
+    required this.iconSize,
   }) : super(key: key);
 
   @override
@@ -25,10 +26,15 @@ class CustomHomeSpeciality extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: color,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.h),
               ),
-              padding: const EdgeInsets.all(16),
-              child: Icon(icon, color: Colors.white, size: iconSize),
+              padding: EdgeInsets.all(16.h),
+              child: Image.asset(
+                imagePath,
+                color: Colors.white,
+                height: iconSize,
+                width: iconSize,
+              ),
             ),
             Positioned(
               top: -30.h,
@@ -38,18 +44,22 @@ class CustomHomeSpeciality extends StatelessWidget {
                 height: 50.h,
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.1),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(50.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50.0.h),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          text,
-          style: const TextStyle(color: Colors.black),
+        SizedBox(height: 8.h),
+        Flexible(
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.black, fontSize: 12.sp),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

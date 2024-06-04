@@ -90,188 +90,199 @@ class _SignInScreenState extends State<SignInScreen> {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: SingleChildScrollView(
-                    child: SizedBox(
-                      height: screenHeight(context) - 50.h,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 70.h,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 70.h,
+                        ),
+                        Center(
+                          child: Image.asset(
+                            AppAssetsPath.logo,
+                            height: 100.sp,
+                            width: 100.sp,
+                            color: AppColors.themeColor,
                           ),
-                          Center(
-                            child: Image.asset(
-                              AppAssetsPath.logo,
-                              height: 100.sp,
-                              width: 100.sp,
-                              color: AppColors.themeColor,
-                            ),
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        Center(
+                          child: Text(
+                            'Sign In',
+                            style: textStyleTitle(),
                           ),
-                          SizedBox(
-                            height: 16.h,
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                          child: Text(
+                            'Email',
+                            style: TextStyle(fontSize: 14.sp),
                           ),
-                          Center(
+                        ),
+                        SizedBox(height: 10.h),
+                        ThemeTextField(
+                          labelText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validation: validateEmail,
+                          onSaved: (value) {
+                            _email = value!;
+                          },
+                        ),
+                        SizedBox(height: 15.h),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                          child: Text(
+                            'Password',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        ThemeTextField(
+                          labelText: 'Password',
+                          isObscure: true,
+                          validation: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _password = value!;
+                          },
+                        ),
+                        SizedBox(height: 40.h),
+                        ThemeButton(
+                          onPressed: () => _submit(userProvider, context),
+                          label: 'Sign In',
+                        ),
+                        SizedBox(height: 10.h),
+                        Center(
+                          child: TextButton(
+                            onPressed: () {},
                             child: Text(
-                              'Sign In',
-                              style: textStyleTitle(),
+                              'Forgot Password ?',
+                              style: TextStyle(
+                                  color: AppColors.themeColor, fontSize: 14.sp),
                             ),
                           ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                            child: const Text('Email'),
-                          ),
-                          SizedBox(height: 10.h),
-                          ThemeTextField(
-                            labelText: 'Email',
-                            keyboardType: TextInputType.emailAddress,
-                            validation: validateEmail,
-                            onSaved: (value) {
-                              _email = value!;
-                            },
-                          ),
-                          SizedBox(height: 15.h),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                            child: const Text('Password'),
-                          ),
-                          SizedBox(height: 10.h),
-                          ThemeTextField(
-                            labelText: 'Password',
-                            isObscure: true,
-                            validation: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _password = value!;
-                            },
-                          ),
-                          SizedBox(height: 60.h),
-                          ThemeButton(
-                            onPressed: () => _submit(userProvider, context),
-                            label: 'Sign In',
-                          ),
-                          SizedBox(height: 10.h),
-                          Center(
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Forgot Password ?',
-                                style: TextStyle(color: AppColors.themeColor),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Center(child: Text('or continue with')),
-                          SizedBox(height: 20.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.h),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      border: Border.all(
-                                        color: AppColors.themeLightGrey,
-                                        width: 1.0,
-                                      ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Center(
+                            child: Text(
+                          'or continue with',
+                          style: TextStyle(fontSize: 14.sp),
+                        )),
+                        SizedBox(height: 20.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    border: Border.all(
+                                      color: AppColors.themeLightGrey,
+                                      width: 1.0,
                                     ),
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(width: 10.w),
-                                          Image.asset(
-                                            AppAssetsPath.facebook,
-                                            height: 24.sp,
-                                            width: 24.sp,
+                                  ),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(width: 10.w),
+                                        Image.asset(
+                                          AppAssetsPath.facebook,
+                                          height: 24.h,
+                                          width: 24.h,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Expanded(
+                                          child: Text(
+                                            'Facebook',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14.sp),
                                           ),
-                                          SizedBox(width: 10.w),
-                                          const Expanded(
-                                            child: Text(
-                                              'Facebook',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10.w),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.h),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      border: Border.all(
-                                        color: AppColors.themeLightGrey,
-                                        width: 1.0,
-                                      ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    border: Border.all(
+                                      color: AppColors.themeLightGrey,
+                                      width: 1.0,
                                     ),
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(width: 10.w),
-                                          Image.asset(
-                                            AppAssetsPath.google,
-                                            height: 24.sp,
-                                            width: 24.sp,
+                                  ),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(width: 10.w),
+                                        Image.asset(
+                                          AppAssetsPath.google,
+                                          height: 24.h,
+                                          width: 24.h,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Expanded(
+                                          child: Text(
+                                            'Google',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14.sp),
                                           ),
-                                          SizedBox(width: 10.w),
-                                          const Expanded(
-                                            child: Text(
-                                              'Google',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Spacer(),
-                          Center(
-                            child: Text.rich(
-                              TextSpan(
-                                text: 'Don’t have an account? ',
-                                style: TextStyle(color: Colors.black),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Sign Up',
-                                    style:
-                                        TextStyle(color: AppColors.themeColor),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.pushNamed(
-                                            context, SignUpScreen.routeName);
-                                      },
-                                  ),
-                                ],
-                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Center(
+                          child: Text.rich(
+                            TextSpan(
+                              text: 'Don’t have an account? ',
+                              style: TextStyle(color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Sign Up',
+                                  style: TextStyle(color: AppColors.themeColor),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(
+                                          context, SignUpScreen.routeName);
+                                    },
+                                ),
+                              ],
                             ),
                           ),
-                          //SizedBox(height: 20.h),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 20.h),
+                      ],
                     ),
                   ),
                 );

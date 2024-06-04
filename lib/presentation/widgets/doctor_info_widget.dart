@@ -17,7 +17,7 @@ class DoctorInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.h,
-      width: 140.w,
+      width: 150.h,
       margin: EdgeInsets.symmetric(horizontal: 10.0.h),
       padding: EdgeInsets.all(10.0.h),
       decoration: BoxDecoration(
@@ -58,6 +58,7 @@ class DoctorInfoWidget extends StatelessWidget {
           Flexible(
               child: Text(
             userModel.areaOfExpertise,
+            style: TextStyle(fontSize: 14.sp),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
@@ -65,6 +66,7 @@ class DoctorInfoWidget extends StatelessWidget {
           Flexible(
               child: Text(
             userModel.review,
+            style: TextStyle(fontSize: 14.sp),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,

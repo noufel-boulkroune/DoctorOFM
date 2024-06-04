@@ -1,7 +1,7 @@
 import 'package:dr_office_management/data/constants/app_colors.dart';
 import 'package:dr_office_management/presentation/views/dashboard/home_screen.dart';
+import 'package:dr_office_management/presentation/views/doctor_profile_screen/doctor_profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabScreen extends StatefulWidget {
@@ -50,7 +50,7 @@ class _TabScreenState extends State<TabScreen>
         controller: _tabController,
         children: [
           HomeScreen(),
-          Container(color: Colors.blue),
+          DoctorProfileScreen(),
           Container(color: Colors.green),
           Container(color: Colors.orange),
         ],
@@ -60,8 +60,8 @@ class _TabScreenState extends State<TabScreen>
         items: <BottomNavigationBarItem>[
           _buildBottomNavigationBarItem(
               Icons.home, Icons.home_outlined, 'Home', 0),
-          _buildBottomNavigationBarItem(
-              Icons.favorite, Icons.favorite_outline, 'Favorite', 1),
+          _buildBottomNavigationBarItem(Icons.calendar_month,
+              Icons.calendar_month_outlined, 'Appointments', 1),
           _buildBottomNavigationBarItem(
               Icons.chat, Icons.chat_outlined, 'Chat', 2),
           _buildBottomNavigationBarItem(
@@ -81,7 +81,7 @@ class _TabScreenState extends State<TabScreen>
       icon: _showText[index]
           ? Container(
               decoration: BoxDecoration(
-                color: AppColors.themeColor.withOpacity(0.1),
+                color: AppColors.themeMaterialColor.shade100.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: Padding(
@@ -108,9 +108,18 @@ class _TabScreenState extends State<TabScreen>
                 ),
               ),
             )
-          : Icon(
-              iconOutlined,
-              color: AppColors.themeColor,
+          : Container(
+              decoration: BoxDecoration(
+                color: AppColors.themeMaterialColor.shade100.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(8.sp),
+                child: Icon(
+                  iconOutlined,
+                  color: AppColors.themeColor,
+                ),
+              ),
             ),
       label: '',
     );

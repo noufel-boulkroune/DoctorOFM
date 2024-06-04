@@ -61,7 +61,8 @@ class _ThemeButtonState extends State<ThemeButton> {
           child: Text(
             widget.label,
             style: TextStyle(
-                color: widget.textColor ?? AppColors.tagBGColor, fontSize: 14),
+                color: widget.textColor ?? AppColors.tagBGColor,
+                fontSize: 14.sp),
           ),
         ),
       ),

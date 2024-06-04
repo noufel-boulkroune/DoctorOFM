@@ -1,19 +1,19 @@
+import 'package:dr_office_management/data/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomSpeciality extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String text;
   final Color color;
   final double iconSize;
-  final double containerSize;
 
   const CustomSpeciality({
     Key? key,
-    required this.icon,
+    required this.imagePath,
     required this.text,
     required this.color,
-    this.iconSize = 24.0,
-    this.containerSize = 150.0,
+    required this.iconSize,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class CustomSpeciality extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: containerSize,
-          height: containerSize,
+          width: screenWidth(context) * 0.4,
+          height: screenWidth(context) * 0.4,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(25.0),
@@ -32,7 +32,12 @@ class CustomSpeciality extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: Colors.white, size: iconSize),
+                Image.asset(
+                  imagePath,
+                  height: iconSize,
+                  width: iconSize,
+                  fit: BoxFit.cover,
+                ),
                 SizedBox(height: 8.0),
                 Text(
                   text,

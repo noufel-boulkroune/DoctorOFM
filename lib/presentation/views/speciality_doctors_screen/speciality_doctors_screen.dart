@@ -1,7 +1,8 @@
+import 'package:dr_office_management/data/constants/constants.dart';
+import 'package:dr_office_management/data/models/grid_items_model.dart';
+import 'package:dr_office_management/presentation/widgets/custom_speciality.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:dr_office_management/presentation/widgets/custom_speciality.dart';
-import 'package:dr_office_management/data/constants/constants.dart';
 
 class SpecialityDoctorsScreen extends StatefulWidget {
   static const String routeName = '/speciality_doctors';
@@ -15,7 +16,7 @@ class SpecialityDoctorsScreen extends StatefulWidget {
 
 class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
   String _searchQuery = '';
-  List _filteredItems = List.from(items);
+  List<GridItem> _filteredItems = List.from(items);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                 onChanged: (value) {
                   setState(() {
                     _searchQuery = value.toLowerCase();
-                    _filterItems(); // Call method to filter items based on search query
+                    _filterItems();
                   });
                 },
                 decoration: InputDecoration(
@@ -60,16 +61,15 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                   crossAxisSpacing: 10.w,
                   mainAxisSpacing: 10.h,
                 ),
-                itemCount: _filteredItems.length, // Use filtered items count
+                itemCount: _filteredItems.length,
                 itemBuilder: (BuildContext context, int index) {
                   final item = _filteredItems[index];
 
                   return CustomSpeciality(
-                    icon: item.icon,
+                    imagePath: item.imagePath,
                     text: item.text,
                     color: item.color,
-                    iconSize: 48.0,
-                    containerSize: screenWidth(context) * 0.4,
+                    iconSize: 40.sp,
                   );
                 },
               ),
@@ -81,10 +81,12 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
   }
 
   void _filterItems() {
-    _filteredItems = items
-        .where((item) =>
-            item.text.toLowerCase().contains(_searchQuery) ||
-            item.text.toLowerCase().startsWith(_searchQuery))
-        .toList();
+    setState(() {
+      _filteredItems = items
+          .where((item) =>
+              item.text.toLowerCase().contains(_searchQuery) ||
+              item.text.toLowerCase().startsWith(_searchQuery))
+          .toList();
+    });
   }
 }

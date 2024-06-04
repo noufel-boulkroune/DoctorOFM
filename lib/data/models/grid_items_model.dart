@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class GridItem {
-  final IconData icon;
+  final String imagePath;
   final String text;
   final Color color;
 
-  GridItem({required this.icon, required this.text, required this.color});
+  GridItem({
+    required this.imagePath,
+    required this.text,
+    required this.color,
+  });
 }

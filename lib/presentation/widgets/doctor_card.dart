@@ -89,7 +89,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
                 ),
@@ -98,6 +98,9 @@ class _DoctorCardState extends State<DoctorCard> {
                     widget.userModel.review,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
                   ),
                 ),
                 Flexible(
@@ -105,12 +108,14 @@ class _DoctorCardState extends State<DoctorCard> {
                     widget.userModel.areaOfExpertise,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Spacer(),
           Container(
             decoration: BoxDecoration(
               color: AppColors.themeMaterialColor.shade100.withOpacity(0.5),

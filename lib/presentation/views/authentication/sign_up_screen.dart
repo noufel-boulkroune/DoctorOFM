@@ -103,9 +103,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _onCameraClick() {
     final action = CupertinoActionSheet(
-      message: const Text(
+      message: Text(
         'Profile Picture',
-        style: TextStyle(fontSize: 15.0),
+        style: TextStyle(fontSize: 15.0.sp),
       ),
       actions: <Widget>[
         CupertinoActionSheetAction(

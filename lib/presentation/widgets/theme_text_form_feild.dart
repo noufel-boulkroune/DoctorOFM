@@ -71,8 +71,8 @@ class _ThemeTextFieldState extends State<ThemeTextField> {
           keyboardType: widget.keyboardType ?? TextInputType.text,
           cursorColor: Colors.black,
           style: TextStyle(
-            color: widget.textColor ?? AppColors.textFieldTextColor,
-          ),
+              color: widget.textColor ?? AppColors.textFieldTextColor,
+              fontSize: 16.sp),
           inputFormatters: [
             if (widget.keyboardType == TextInputType.emailAddress)
               FilteringTextInputFormatter.deny(RegExp(r"\s\b|\b\s"))
@@ -85,8 +85,9 @@ class _ThemeTextFieldState extends State<ThemeTextField> {
             hintText: widget.hintText,
             labelText: widget.labelText,
             labelStyle: TextStyle(
-              color: widget.textColor ?? AppColors.themeLightGrey,
-            ),
+                color: widget.textColor ?? AppColors.themeLightGrey,
+                fontSize: 14.sp),
+            hintStyle: TextStyle(fontSize: 14.sp),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
               borderSide: const BorderSide(

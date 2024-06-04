@@ -129,7 +129,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               itemCount: filteredDoctors.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
                 crossAxisSpacing: 16.w,
                 mainAxisSpacing: 16.w,
               ),

@@ -72,6 +72,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.bottomCenter,
                   child: Image.asset(
                     _images[_currentPageIndex],
+                    height: screenHeight(context) * 0.40,
+                    width: screenHeight(context) * 0.35,
+                    fit: BoxFit.contain,
+                    alignment: Alignment.bottomCenter,
                   ),
                 ),
                 SizedBox(height: 50.h),
